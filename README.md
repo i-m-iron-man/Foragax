@@ -1,2 +1,2 @@
 # Forajax
-A multi-Agent RL framework for foraging based on Jax
+An Agent Based Modelling framework for foraging and other tasks based on Jax
