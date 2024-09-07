@@ -41,11 +41,11 @@ class Agent:
     policy: Policy
 
     @staticmethod
-    def create_agent(params:Params, unique_id:int, active_state:int, agent_type:int, key: jax.random.PRNGKey):
+    def create_agent(create_params:Params, unique_id:int, active_state:int, agent_type:int, key: jax.random.PRNGKey):
         pass
     
     @staticmethod
-    def step_agent(input:Signal, agents:struct.dataclass):
+    def step_agent(step_params:Params, input:Signal, agents:struct.dataclass):
         pass
 
     @staticmethod
@@ -72,7 +72,7 @@ class Agent_Set:
         #create( params, unique_id, active_state, agent_types, key)
         #params is not vmaped over
 
-        self.step_agents = jax.jit(jax.vmap(agent.step_agent))
+        self.step_agents = jax.jit(jax.vmap(agent.step_agent, in_axes=(None,0,0)))
 
         self.reset_agents = jax.jit(jax.vmap(agent.reset_agent))
 
@@ -81,9 +81,4 @@ class Agent_Set:
         self.num_inactive_agents = num_total_agents - num_active_agents
         self.agent_type = agent_type
         print("AgentSet initialized")
-
-
-
-
-    
 

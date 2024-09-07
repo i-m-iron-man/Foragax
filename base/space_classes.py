@@ -30,26 +30,24 @@ class Ray:
 
 
 @struct.dataclass
-class ContinuousSpace:
+class Space:
     x_min: jnp.float32
     x_max: jnp.float32
     y_min: jnp.float32
     y_max: jnp.float32
     torous: bool
     walls: Wall
-    def create_cont_space(x_min, x_max, y_min, y_max, torous, wall_begins:Point, wall_ends:Point):
+    def create_space(x_min, x_max, y_min, y_max, torous, wall_begins:Point, wall_ends:Point):
         x_min = x_min
         x_max = x_max
         y_min = y_min
         y_max = y_max
         torous = torous
         walls = jax.vmap(Wall.create_wall)(wall_begins, wall_ends)
-        return ContinuousSpace(x_min, x_max, y_min, y_max, torous, walls)
+        return Space(x_min, x_max, y_min, y_max, torous, walls)
     
 
-@struct.dataclass
-class GridSpace:
-    pass
+
 
 
 @struct.dataclass

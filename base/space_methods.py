@@ -145,12 +145,14 @@ def ray_wall_sensor(ray, data):
 jit_ray_wall_sensor = jax.jit(ray_wall_sensor)
 
 
-def create_cont_space(x_min, x_max, y_min, y_max, torous, wall_array):
+def create_space(x_min, x_max, y_min, y_max, torous, wall_array):
     x_min = x_min
     x_max = x_max
     y_min = y_min
     y_max = y_max
     torous = torous
+    if wall_array is None:
+        return Space(x_min, x_max, y_min, y_max, torous, None)
     wall_begin_points, wall_end_points = wall_generator(wall_array)
     walls = jax.vmap(Wall.create_wall)(wall_begin_points, wall_end_points)
-    return ContinuousSpace(x_min, x_max, y_min, y_max, torous, walls)
+    return Space(x_min, x_max, y_min, y_max, torous, walls)
