@@ -5,8 +5,11 @@ from flax import struct
 import sys
 sys.path.insert(1, '/home/siddhart/source/Foragax_v2')
 from base.agent_classes import *
+from base.space_classes import *
 
-def create_agents(agent_set:Agent_Set, params:Params, key:jax.random.PRNGKey):
+
+
+def create_agents(params:Params, agent_set:Agent_Set, key:jax.random.PRNGKey):
     uniq_ids = jnp.arange(agent_set.num_total_agents)
     key, *create_keys = jax.random.split(key, agent_set.num_total_agents+1)
     create_keys = jnp.array(create_keys)
@@ -17,14 +20,14 @@ def create_agents(agent_set:Agent_Set, params:Params, key:jax.random.PRNGKey):
     return agent_set.create_agents(params, uniq_ids, active_states, agent_types, create_keys)
 
 
-def step_agents(agent_set:Agent_Set, input:Signal):
+def step_agents(params:Params, input:Signal, agent_set:Agent_Set):
     try:
-        return agent_set.step_agents(input, agent_set.agents)
+        return agent_set.step_agents(params, input, agent_set.agents)
     except ValueError:
         print("Error in step_agents")
 
 
-def add_agents(add_func:callable, agents:Agent, num_agents_add:int, add_params:Params, key:jax.random.PRNGKey):
+def add_agents(add_func:callable, num_agents_add:int, add_params:Params, agents:Agent, key:jax.random.PRNGKey):
     id_last_active = jnp.sum(agents.active_state, dtype=jnp.int32)
 
     def set_data(idx, agents__add_params__key):
@@ -39,7 +42,7 @@ def add_agents(add_func:callable, agents:Agent, num_agents_add:int, add_params:P
 jit_add_agents = jax.jit(add_agents, static_argnums=(0,))
 
 
-def remove_agents(remove_func:callable, agents:Agent, num_agents_remove:int, remove_params:Params):
+def remove_agents(remove_func:callable, num_agents_remove:int, remove_params:Params, agents:Agent):
     
     def remove_data(idx, agents__remove_params):
         agents, remove_params = agents__remove_params
@@ -52,7 +55,7 @@ def remove_agents(remove_func:callable, agents:Agent, num_agents_remove:int, rem
 
 jit_remove_agents = jax.jit(remove_agents, static_argnums=(0,))
 
-def set_agents(set_func:callable, agents:Agent, num_agents_set:int, set_params:Params, key:jax.random.PRNGKey):
+def set_agents(set_func:callable, num_agents_set:int, set_params:Params, agents:Agent, key:jax.random.PRNGKey):
     def set_data(idx, agents__set_params__key):
         agents, set_params, key = agents__set_params__key
         set_ids = set_params.content['set_ids']
