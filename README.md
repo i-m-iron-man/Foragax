@@ -1,4 +1,5 @@
-# Foragax <img src="https://github.com/i-m-iron-man/Foragax/blob/main/Docs/assets/foragax_logo.webp" align="right" width="300">
+# Foragax 
+<img src="https://github.com/i-m-iron-man/Foragax/blob/main/Docs/assets/foragax_logo.webp" align="right" width="250">
 
 Foragax is an Agent Based Modelling (ABM) package based on JAX. It provides scalable and efficient ABM simulations by leveraging JAX's automatic vectorization and just-in-time compilation capabilities. The main features of Foragax include:
 
