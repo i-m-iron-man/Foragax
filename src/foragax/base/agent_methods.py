@@ -1,9 +1,6 @@
-
 import jax
 import jax.numpy as jnp
 from flax import struct
-import sys
-sys.path.insert(1, '/home/siddhart/source/Foragax_v2')
 from base.agent_classes import *
 from base.space_classes import *
 

@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(1, '/home/siddhart/source/Foragax_v2')
 
 from base.space_classes import *
 import jax
