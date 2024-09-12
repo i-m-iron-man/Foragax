@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "foragax"
-version = "0.0.1"
+version = "0.0.3"
 description = "ABM package in JAX."
 readme = "README.md"
 license = {file = "LICENSE.md"}
@@ -27,7 +27,7 @@ classifiers = [
     "Natural Language :: English",
 ]   
 [tool.hatch.build]
-include = ["src/foragax/*"]
+include = ["foragax/*"]
 
 
     
