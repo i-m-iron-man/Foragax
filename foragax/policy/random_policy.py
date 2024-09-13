@@ -2,7 +2,7 @@
 
 
 from flax.struct import dataclass
-from base.agent_classes import Policy, Signal, Params, State
+from foragax.base.agent_classes import Policy, Signal, Params, State
 import jax
 import jax.numpy as jnp
 

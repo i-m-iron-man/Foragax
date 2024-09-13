@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(1, '/home/siddhart/source/Foragax_v2')
-from base.agent_classes import Policy, Signal, Params, State
+from foragax.base.agent_classes import Policy, Signal, Params, State
 
 import jax
 import jax.numpy as jnp
