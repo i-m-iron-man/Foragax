@@ -1,5 +1,5 @@
 
-from base.space_classes import *
+from foragax.base.space_classes import *
 import jax
 import jax.numpy as jnp
 

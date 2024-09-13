@@ -1,8 +1,8 @@
 import jax
 import jax.numpy as jnp
 from flax import struct
-from base.agent_classes import *
-from base.space_classes import *
+from foragax.base.agent_classes import *
+from foragax.base.space_classes import *
 
 
 
