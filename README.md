@@ -22,7 +22,7 @@ Requires Python 3.10+, [JAX 0.4.13+](https://jax.readthedocs.io/en/latest/quicks
 
 ## Citation
 
-If this framework was useful in your work, please consider starring and cite: [(arXiv link)](https://arxiv.org/abs/2409.06345v1)
+If this framework was useful in your work, please consider starring and cite: [(arXiv link)](https://www.arxiv.org/abs/2409.06345v2)
 
 ```bibtex
 @misc{chaturvedi2024foragaxagentbasedmodelling,
