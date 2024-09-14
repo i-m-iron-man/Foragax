@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/i-m-iron-man/Foragax/blob/main/Docs/assets/foragax_logo.webp" width="250">
+    <img src="https://github.com/i-m-iron-man/Foragax/blob/main/docs/assets/foragax_logo.webp" width="250">
 </div>
 
 
