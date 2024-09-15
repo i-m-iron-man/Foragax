@@ -102,6 +102,8 @@ def is_one(dice_agent: fgx_classes.Agent, select_params: fgx_classes.Params):
     draw = jnp.reshape(dice_agent.state.content['draw'], (-1))
     return draw == 1
 num_agents_dead, remove_indices = fgx_methods.jit_select_agents(select_func = is_one, select_params = None, agents = Dice_set.agents)
+
+# now, remove the agents
 dice_remove_params_content = {'remove_ids': remove_indices}
 dice_remove_params = fgx_classes.Params(content = dice_remove_params_content)
 Dice_set.agents = fgx_methods.jit_remove_agents(remove_func = Dice.remove_agent, num_agents_remove = num_agents_dead, 
@@ -122,7 +124,7 @@ num_agents_add, add_indices = fgx_methods.jit_select_agents(select_func = is_six
 num_active_agents = jnp.sum(Dice_set.agents.active_state, dtype = jnp.int32)
 num_agents_add = jnp.minimum(num_agents_add, Dice_set.num_total_agents - num_active_agents)
 
-# add the agents
+# now, add the agents
 Dice_set.agents, key = fgx_methods.jit_add_agents(add_func = Dice.add_agent, num_agents_add = num_agents_add, 
                                                   add_params = None, agents = Dice_set.agents, key = None)
 
