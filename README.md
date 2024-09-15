@@ -23,7 +23,7 @@ Requires Python 3.10+, [JAX 0.4.13+](https://jax.readthedocs.io/en/latest/quicks
 This is an example of agents that roll a dice.
 For each agent that draws a 6, a new agent is activated.
 Each agent that draws a 1 is deactivated.
-The code can be found [here](https://github.com/i-m-iron-man/Foragax/blob/main/examples/hello_world/hello_world.ipynb)
+The note-book implementing this can be found [here](https://github.com/i-m-iron-man/Foragax/blob/main/examples/hello_world/hello_world.ipynb).
 
 ```python
 import foragax.base.agent_classes as fgx_classes
@@ -128,6 +128,8 @@ Dice_set.agents, key = fgx_methods.jit_add_agents(add_func = Dice.add_agent, num
 
 
 ```
+## Version v0.0.5
+The framework is still under active development. Feel free to open an issue if you find any bugs or have any suggestions.
 
 ## Citation
 
