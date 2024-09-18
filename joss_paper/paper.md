@@ -1,9 +1,9 @@
 ---
-title: 'Foragax: A Python package for Agent Based Modelling using JAX'
+title: 'Foragax: A Python package for Agent-Based Modelling using JAX'
 tags:
     - Python
     - JAX
-    - Agent Based Modelling
+    - Agent-Based Modelling
 
 authors:
     - name: Siddharth S. Chaturvedi
@@ -21,15 +21,25 @@ affiliations:
 
 # Sunmmary
 
-Agent Based Modelling (ABM) is a useful tool to simulate models of complex systems. However, ABM can be computationally expensive, especially when the number of agents is large. Foragax is a Python package that uses JAX to accelerate ABM simulations. JAX is a library that provides automatic vectorization and just-in-time compilation, which can be used to speed up computations. It also provides automatic differentiation, which can be useful for training agents using gradient-based methods. Foragax provides a simple and familiar ABM interface for creating and manipulating agents. Although Foragax is geared towards general-purpose ABM, it provides certain predefined functionalities like vectorized ray-casting and wall-detection for simulating agents moving in a continuous 2D environment with custom boundaries and obstacles.
+Agent-Based Modelling (ABM) 
+
+Agent Based Modelling (ABM) is a useful tool to simulate models of complex systems. However, ABM can be computationally expensive, especially when the number of agents is large. Foragax is a Python package that uses JAX to accelerate ABM simulations. JAX is a library that provides automatic vectorization and just-in-time compilation, which can be used to speed up computations. It also provides automatic differentiation, which can be useful for training agents using gradient-based methods. Foragax provides these features to users to design efficient ABM simulations. Although Foragax can be used to formulate a general ABM, it is particularly tailored for foraging scenrios by providing utilities to simulate a ray-casting sensor model for agents to detect walls and other agents in a continuous 2D environment in a vectorized manner.
+
 
 # Statement of need
 
-Many-agents scenarios are prevalent in many fields, including neuroscience, biology, social sciences, and economics. Chief examples include simulating the behavior of neurons in the brain, the movement of animals in a habitat, the spread of diseases in a population, the dynamics of financial markets, and gauging the effects of policy changes on a society. Foragax will provide a simple and efficient way to simulate these scenarios using JAX.
+Many-agents scenarios are prevalent in many fields, including neuroscience, biology, social sciences, and economics. Chief examples include simulating the behavior of neurons in the brain, the movement of animals in a habitat, the spread of diseases in a population, the dynamics of financial markets, and gauging the effects of policy changes on a society. Foragax provides a simple and efficient way to simulate such scenarios using JAX.
 
 The main feature of Foragax is that it can handle agent-manipulation operations without giving up the just-in-time compilation functionality provided by JAX. This includes adding and removing a traced-number of agents, updating properties of selected agents to traced values, and sorting them based on custom trends. This feature combined with automatic vectorization helps scale ABM developed in Foragax to many-agent scenarios efficiently. Foragax will also provide a series of tutorials and examples to help users get started with ABM using JAX.
 
-The package was inspired by the need to simulate continuous non-episodic evolution in many-agent patch foraging environments. Thus, it also provides utilities for simulating a ray-casting sensor model for agents to detect walls and other agents in a continuous 2D environment in a vectorized manner. This feature is particularly useful for simulating scenarios where agents need to navigate through a maze or avoid obstacles. A dedicated tutorial will be provided to demonstrate how to use this feature.
+The package was inspired by the need to simulate continuous non-episodic evolution in many-agent patch foraging environments. Thus, it also provides utilities for simulating a ray-casting sensor model for agents to detect walls and other agents in a continuous 2D environment in a vectorized manner. This feature is particularly useful for simulating scenarios where agents need to navigate through a maze or avoid obstacles.
+
+# An example.
+An example highlighting a collection of dice rolling agents can be found [here](https://github.com/i-m-iron-man/Foragax/blob/main/examples/hello_world/hello_world.ipynb). In this example an agent updates its state based on the outcome of a dice roll. If the agent draws a six, a deactivated agent is activated. If the agent draws a one,it is deactivated.
+
+# Limitations
+
+Since Foragax uses JAX at its backend, it is limited to the features provided by JAX. For example, JAX does not support Python's built-in data structures like lists and dictionaries. Instead, it uses NumPy arrays and JAX's own data structures. This means that users may need to adapt their code to work with these data structures. Additionally, JAX's just-in-time compilation and automatic vectorization can only be applied to pure functions, which in-turn need the function arguments to be of fixed shapes during runtime. In Foragax, we circumvent this by simulating in-active agents along with active agents as blanks such that their collective sum remains constant. This inturn needs the user to define a maximum number of agents beforehand.
 
 
 # Acknowledgements
