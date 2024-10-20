@@ -23,7 +23,6 @@ def step_agents(params:Params, input:Signal, agent_set:Agent_Set):
     except ValueError:
         print("Error in step_agents")
 
-
 def add_agents(add_func:callable, num_agents_add:int, add_params:Params, agents:Agent, key:jax.random.PRNGKey):
     id_last_active = jnp.sum(agents.active_state, dtype=jnp.int32)
 

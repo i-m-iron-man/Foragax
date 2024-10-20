@@ -81,4 +81,3 @@ class Agent_Set:
         self.num_inactive_agents = num_total_agents - num_active_agents
         self.agent_type = agent_type
         print("AgentSet initialized")
-

@@ -45,10 +45,12 @@ Since Foragax uses JAX at its backend, it is limited to the features provided by
 # Acknowledgements
 This software is part of the project Dutch Brain Interface Initiative (DBI2) with project number 024.005.022 of the research programme Gravitation which is (partly) financed by the Dutch Research Council (NWO).
 
+# Abstract
+Agent Based Modelling (ABM) is a useful tool to simulate models of complex systems. However, ABM can be computationally expensive, especially when the number of agents is large. Foragax is a Python package that uses JAX to accelerate general ABM simulations. JAX is a library that provides automatic vectorization and just-in-time compilation, which can be used to speed up computations. It also provides automatic differentiation, which can be useful for training agents using gradient-based methods. Foragax provides these features to users to design efficient ABM simulations using a familiar interface. It can handle agent-manipulation operations like adding and removing agents, updating particular properties of selected agents, and sorting agents based on custom trends without giving up the just-in-time compilation functionality provided by JAX.
 
 
-
-
+# Abstract
+Agent Based Modelling (ABM) is a useful tool to simulate models of complex systems. Many-agent based models simulate the interactions of many agents in a given environment and are used in various fields like neuroscience, biology, social sciences, and economics. However, such ABM can be computationally expensive, especially when the number of agents is large. Foragax is a Python package that uses JAX to accelerate general ABM simulations at the backend, whilst providing a familiar ABM interface to the user. JAX is a library that provides automatic vectorization and just-in-time compilation, which can be used to speed up computations. It also provides automatic differentiation, which can be useful for training agents using gradient-based methods. Foragax brings these features to the design process of ABM simulations. It can handle agent-manipulation operations like adding and removing agents, updating particular properties of selected agents, and sorting agents based on custom trends without giving up the just-in-time compilation functionality provided by JAX. Although Foragax can be used to formulate a general ABM, it is particularly tailored for foraging scenarios by providing utilities to simulate a ray-casting sensor model for agents to detect walls and other agents in a continuous 2D environment in a vectorized manner. Foragax will also provide a series of tutorials and examples to help users get started with ABM using JAX.
 
 
     
