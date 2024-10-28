@@ -20,7 +20,7 @@ affiliations:
       index: 1
 
 # Sunmmary
-
+fgdfg
 Agent-Based Modelling (ABM) 
 
 Agent Based Modelling (ABM) is a useful tool to simulate models of complex systems. However, ABM can be computationally expensive, especially when the number of agents is large. Foragax is a Python package that uses JAX to accelerate ABM simulations. JAX is a library that provides automatic vectorization and just-in-time compilation, which can be used to speed up computations. It also provides automatic differentiation, which can be useful for training agents using gradient-based methods. Foragax provides these features to users to design efficient ABM simulations. Although Foragax can be used to formulate a general ABM, it is particularly tailored for foraging scenrios by providing utilities to simulate a ray-casting sensor model for agents to detect walls and other agents in a continuous 2D environment in a vectorized manner.
