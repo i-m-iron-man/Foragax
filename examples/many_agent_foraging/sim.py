@@ -12,6 +12,15 @@ import jax
 import jax.numpy as jnp
 from flax import struct
 
+#HYPERPARAMS
+MAX_AGE = 1000.0 # orignalvalue 50.0
+TIME_TO_DIE = 3.0 # orignalvalue 1.
+NOISE = 0.02 # og: adaptive, uncomment lines in add_forager function
+NUMBER_OF_NEURONS = 40 # originalvalue 30
+
+
+
+
 @struct.dataclass
 class Forager(Agent):
     @staticmethod
@@ -97,7 +106,7 @@ class Forager(Agent):
             ang_new = jnp.arctan2(Y_vel_new, X_vel_new)
 
             energy = forager.state.content['energy']
-            energy_new = energy + energy_in - dt*jnp.sum(jnp.abs(actions.content['actions']))
+            energy_new = energy + energy_in - 0.3*dt*jnp.sum(jnp.abs(actions.content['actions']))
             #energy_new = jnp.minimum(energy_new, params.content['energy_max'])
             energy_new = jnp.clip(energy_new, params.content['energy_min'], params.content['energy_max'])
             rad_new = energy_new
@@ -166,8 +175,9 @@ class Forager(Agent):
                                'energy': energy, 'rad': rad, 'time_above_rep_thresh': time_above_rep_thresh,
                                'time_below_die_thresh': time_below_die_thresh})
 
-        noise_scale = 0.1/(forager_to_copy.age + 0.01)
-        noise_scale = jnp.clip(noise_scale, 0.001, 0.1)
+        #noise_scale = 0.02/(forager_to_copy.age + 0.01)
+        #noise_scale = jnp.clip(noise_scale, 0.001, 0.02)
+        noise_scale = NOISE
         key, *noise_keys = jax.random.split(key, 6)
         J = forager_to_copy.policy.params.content['J']
         J_noise = jax.random.normal(noise_keys[0], J.shape)
@@ -470,7 +480,7 @@ def Neuroevolution(foragers, resources, key, max_foragers, max_resources, space,
         cond = jnp.logical_or(foragers.age > select_params.content['max_age'], cond)
         return cond
     
-    select_params = Params(content={'time_to_die': 1.0, 'max_age': 50.0})
+    select_params = Params(content={'time_to_die': TIME_TO_DIE, 'max_age': MAX_AGE})
     num_foragers_remove, remove_indx = jit_select_agents(select_weak_or_old_foragers, select_params, foragers)
     
     foragers_remove_params = Params(content={'remove_ids': remove_indx})
@@ -646,7 +656,7 @@ class Foraging_world:
         forager_input = Signal(content={'obs': sensor_data, 'energy_in': energy_in})
         resource_input = Signal(content={'energy_out': energy_out})
         
-        forager_step_params = Params(content={'space': self.space, 'repr_thresh': 5.4, 'die_thresh': 0.0, 'energy_min': -4.0, 'energy_max': 15.0})
+        forager_step_params = Params(content={'space': self.space, 'repr_thresh': 5.0, 'die_thresh': 0.0, 'energy_min': -1.0, 'energy_max': 15.0})
         resource_step_params = Params(content={'blossom_thresh': 3.0})
         self.foragers_set.agents = step_agents(forager_step_params, forager_input, self.foragers_set)
         self.resources_set.agents = step_agents(resource_step_params, resource_input, self.resources_set)
@@ -699,9 +709,9 @@ dt = 0.1
 num_recording_frames = 1000
 rec_start_frame = 500000
 params = Params(content={'space_params': {'x_min': 0.0, 'x_max': X_max, 'y_min': 0.0, 'y_max': Y_max, 'torous': False, 'walls': wall_array},
-                         'forager_params': {'total_num':1000, 'active_num': 500, 'type': 1, 'dt': dt, 'num_neurons': 40, 'num_obs': 28, 
+                         'forager_params': {'total_num':1000, 'active_num': 500, 'type': 1, 'dt': dt, 'num_neurons': NUMBER_OF_NEURONS, 'num_obs': 28, 
                                                'num_actions': 2, 'action_scale': 1.0, 'deterministic': True},
-                         'resource_params': {'total_num': 5000, 'active_num': 4000, 'type': 2, 'dt': dt}})
+                         'resource_params': {'total_num': 6000, 'active_num': 5000, 'type': 2, 'dt': dt}})
 key = jax.random.PRNGKey(1)
-foraging_world = Foraging_world(params, key, 5000, num_recording_frames)
-foraging_world.run(rec_start_frame, print_freq=10)
+foraging_world = Foraging_world(params, key, 1000000, num_recording_frames)
+foraging_world.run(rec_start_frame, print_freq=100)
