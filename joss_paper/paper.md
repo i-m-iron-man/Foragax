@@ -34,7 +34,7 @@ The main feature of `Foragax` is that it can handle agent-manipulation operation
 The package was inspired by the need to simulate continuous non-episodic evolution in many-agent patch foraging environments [@hamon2023eco]. Thus, it also provides utilities for simulating a ray-casting sensor model for agents to detect walls and other agents in a continuous 2D environment in a vectorized manner. This feature is particularly useful for simulating scenarios where agents need to navigate through a maze or avoid obstacles.
 
 # An example
-An example highlighting a collection of dice-rolling agents can be found [here](https://github.com/i-m-iron-man/Foragax/blob/main/examples/hello_world/hello_world.ipynb). In this example an agent updates its state based on the outcome of a dice roll. If the agent draws a six, a deactivated agent is activated. If the agent draws a one, the agent itself is deactivated.
+An example highlighting a collection of dice-rolling agents can be found [here](https://github.com/i-m-iron-man/Foragax/blob/main/examples/basic/hello_world/hello_world.ipynb). In this example an agent updates its state based on the outcome of a dice roll. If the agent draws a six, a deactivated agent is activated. If the agent draws a one, the agent itself is deactivated.
 
 # Limitations
 
