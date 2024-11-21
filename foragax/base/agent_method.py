@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
 from flax import struct
-from foragax.base.agent_classes import *
+from agent_classe import *
 from foragax.base.space_classes import *
 
 
@@ -17,11 +17,9 @@ def create_agents(params:Params, agent_set:Agent_Set, key:jax.random.PRNGKey):
     return agent_set.create_agents(params, uniq_ids, active_states, agent_types, create_keys)
 
 
-def step_agents(params:Params, input:Signal, agent_set:Agent_Set):
-    try:
-        return agent_set.step_agents(params, input, agent_set.agents)
-    except ValueError:
-        print("Error in step_agents")
+def step_agents(params:Params, input:Signal, agent_set:Agent_Set, key:jax.random.PRNGKey):
+        return agent_set.step_agents(params, input, agent_set.agents, key)
+
 
 def add_agents(add_func:callable, num_agents_add:int, add_params:Params, agents:Agent, key:jax.random.PRNGKey):
     id_last_active = jnp.sum(agents.active_state, dtype=jnp.int32)
@@ -37,17 +35,16 @@ def add_agents(add_func:callable, num_agents_add:int, add_params:Params, agents:
 
 jit_add_agents = jax.jit(add_agents, static_argnums=(0,))
 
-
-def remove_agents(remove_func:callable, num_agents_remove:int, remove_params:Params, agents:Agent):
+def remove_agents(remove_func:callable, num_agents_remove:int, remove_params:Params, agents:Agent, key:jax.random.PRNGKey):
     
-    def remove_data(idx, agents__remove_params):
-        agents, remove_params = agents__remove_params
-        remove_ids = remove_params.content['remove_ids']
-        new_agent = jax.jit(remove_func)(remove_params, agents, remove_ids[idx])
-        new_agents = jax.tree_util.tree_map(lambda x,y:x.at[remove_ids[idx]].set(y), agents, new_agent)
-        return new_agents, remove_params
-    new_agents, remove_params = jax.lax.fori_loop(0, num_agents_remove, remove_data, (agents, remove_params))
-    return new_agents
+    def remove_data(idx, agents__remove_params__key):
+        agents, remove_params, key = agents__remove_params__key
+        new_agent, key = jax.jit(remove_func)(remove_params, agents, idx, key)
+        new_agents = jax.tree_util.tree_map(lambda x,y:x.at[idx].set(y), agents, new_agent)
+        return new_agents, remove_params, key
+    
+    new_agents, remove_params, key = jax.lax.fori_loop(0, num_agents_remove, remove_data, (agents, remove_params, key))
+    return new_agents, key
 
 jit_remove_agents = jax.jit(remove_agents, static_argnums=(0,))
 

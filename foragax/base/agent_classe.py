@@ -24,10 +24,10 @@ class Policy:
     def create_policy(params:Params, active_state:bool, key:jax.random.PRNGKey):
         pass
     @staticmethod
-    def step_policy(input:Signal, policy:struct.dataclass):
+    def step_policy(input:Signal, policy:struct.dataclass, key:jax.random.PRNGKey):
         pass
     @staticmethod
-    def reset_policy(input:Signal, policy:struct.dataclass):
+    def reset_policy(input:Signal, policy:struct.dataclass, key:jax.random.PRNGKey):
         pass
 
 @struct.dataclass
@@ -45,7 +45,7 @@ class Agent:
         pass
     
     @staticmethod
-    def step_agent(step_params:Params, input:Signal, agents:struct.dataclass):
+    def step_agent(step_params:Params, input:Signal, agents:struct.dataclass, key:jax.random.PRNGKey):
         pass
 
     @staticmethod
@@ -57,24 +57,18 @@ class Agent:
         pass
 
     @staticmethod
-    def reset_agent():
+    def remove_agent(remove_params:Params, Agents:struct.dataclass, idx:int, key:jax.random.PRNGKey):
         pass
 
-    @staticmethod
-    def remove_agent(remove_params:Params, Agents:struct.dataclass, idx:int):
-        pass
+
 
 class Agent_Set:
     agents:Agent
     def __init__(self, agent:Agent, num_total_agents:jnp.int32, num_active_agents:jnp.int32, agent_type:jnp.int32):
 
         self.create_agents = jax.vmap(agent.create_agent, in_axes=(None,0,0,0,0))
-        #create( params, unique_id, active_state, agent_types, key)
-        #params is not vmaped over
 
-        self.step_agents = jax.jit(jax.vmap(agent.step_agent, in_axes=(None,0,0)))
-
-        self.reset_agents = jax.jit(jax.vmap(agent.reset_agent))
+        self.step_agents = jax.jit(jax.vmap(agent.step_agent, in_axes=(None,0,0,0)))
 
         self.num_total_agents = num_total_agents
         self.num_active_agents = num_active_agents
